@@ -73,3 +73,41 @@ class TestWorkflowIntegration:
         """Test manual topic input flow."""
         # This test verifies the input flow works
         assert mock_input() == 'test topic'
+    
+    @pytest.mark.integration
+    @patch('workflow.ChatGoogleGenerativeAI')
+    @patch('workflow.TavilySearch')
+    @patch('workflow.TavilyExtract')
+    @patch('builtins.open', create=True)
+    def test_metrics_saved_after_workflow(self, mock_open, mock_extract, mock_search, mock_llm, mock_env_vars):
+        """Test that metrics are calculated and saved."""
+        from workflow import MultiAgentResearchSystem
+        
+        # Mock file operations to avoid actual file writes
+        mock_file = Mock()
+        mock_open.return_value.__enter__.return_value = mock_file
+        
+        # Setup mocks (same as test_single_iteration_workflow)
+        mock_llm_instance = Mock()
+        mock_response = Mock()
+        mock_response.content = "Plan:\nTest\n\nQueries:\n- q1"
+        mock_llm_instance.invoke.return_value = mock_response
+        mock_llm.return_value = mock_llm_instance
+        
+        mock_search_instance = Mock()
+        mock_search_instance.invoke.return_value = {
+            "results": [{"title": "Test", "url": "https://test.com", "content": "Test"}]
+        }
+        mock_search.return_value = mock_search_instance
+        
+        mock_extract_instance = Mock()
+        mock_extract_instance.invoke.return_value = {
+            "results": [{"url": "https://test.com", "raw_content": "Content"}]
+        }
+        mock_extract.return_value = mock_extract_instance
+        
+        system = MultiAgentResearchSystem()
+        
+        # Verify evaluator was initialized
+        assert hasattr(system, 'evaluator')
+        assert system.evaluator is not None

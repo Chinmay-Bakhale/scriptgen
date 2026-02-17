@@ -5,6 +5,12 @@ from typing import Dict, Any, List, TypedDict, Annotated
 import operator
 from time import sleep
 
+from scriptgen.metrics.evaluator import ReportEvaluator
+import time
+import json
+from pathlib import Path
+
+
 from langgraph.graph import StateGraph, END, START
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_tavily import TavilyExtract, TavilySearch
@@ -89,6 +95,7 @@ class MultiAgentResearchSystem:
         self.writer_llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash-preview-04-17", temperature=0.5)
         self.judge_llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.7)
         self.search_tool = TavilySearch(max_results=2, topic="general", search_depth="basic")
+        self.evaluator = ReportEvaluator()
         self.workflow = self._build_workflow()
         self.app = self.workflow.compile()
 
@@ -286,6 +293,9 @@ class MultiAgentResearchSystem:
     def run(self, topic: str = None):
         """Runs the entire process, starting with user choice for topic discovery."""
         
+        # Track start time
+        start_time = time.time()
+        
         # Step 1: Determine the topic
         if not topic:
             while True:
@@ -300,14 +310,14 @@ class MultiAgentResearchSystem:
                 scout = TopicScout()
                 topic = scout.find_trending_topic()
                 if "Error:" in topic:
-                    print(topic) # Print the error message
-                    return # Exit if topic discovery fails
+                    print(topic)
+                    return
                 print(f"\n🤖 AI has selected the topic: \"{topic}\"")
 
         # Step 2: Run the research workflow with the determined topic
         initial_state = {
             "topic": topic, "iteration": 1, "plan": "", "search_queries": [],
-            "raw_search_results": [], "draft_report": "", "critique": "",
+            "raw_search_results": [], "extracted_pages": [], "draft_report": "", "critique": "",
             "research_history": [], "final_report": ""
         }
         
@@ -327,27 +337,66 @@ class MultiAgentResearchSystem:
                     print("\n**Critique and Suggestions from the Judge:**")
                     print(state_after_node['critique'])
         
+        # Calculate execution time
+        execution_time = time.time() - start_time
         
-        # --- Step 3: Save the final report ---
+        # Step 3: Save the final report
         final_report_content = final_state.get('final_report', "No report was generated.")
         report_filename = "final_research_report_" + re.sub(r'[^\w\s-]', '', topic.lower()).replace(' ', '_')[:50] + ".md"
         with open(report_filename, 'w', encoding='utf-8') as f:
             f.write(final_report_content)
         
-        print(f"\n Workflow complete! Final report saved to '{report_filename}'")
+        print(f"\n✅ Workflow complete! Final report saved to '{report_filename}'")
         
-        """
-        # --- NEW: Step 4: Generate and save image prompts ---
+        # Step 4: Evaluate and save metrics
         if final_report_content and "No report was generated." not in final_report_content:
-            image_gen = ImagePromptGenerator()
-            image_prompt_filename = "image_prompts_for_" + re.sub(r'[^\w\s-]', '', topic.lower()).replace(' ', '_')[:50] + ".md"
-            image_gen.generate_and_save_prompts(final_report_content, image_prompt_filename)
-        else:
-            print("\nSkipping image prompt generation as the final report was not successfully created.")
-        """
-
-
+            print("\n📊 Evaluating report quality...")
+            
+            # Collect all sources from extracted_pages
+            sources = final_state.get('extracted_pages', [])
+            
+            # Evaluate the report
+            metrics = self.evaluator.evaluate_report(
+                report=final_report_content,
+                topic=topic,
+                sources=sources,
+                execution_time=execution_time
+            )
+            
+            # Print formatted metrics
+            print(self.evaluator.format_metrics_report(metrics))
+            
+            # Save metrics to JSON
+            metrics_filename = report_filename.replace('.md', '_metrics.json')
+            metrics_data = {
+                "topic": topic,
+                "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+                "report_file": report_filename,
+                "metrics": metrics
+            }
+            
+            with open(metrics_filename, 'w', encoding='utf-8') as f:
+                json.dump(metrics_data, f, indent=2)
+            
+            print(f"📈 Metrics saved to '{metrics_filename}'")
+            
+            # Append to metrics history file
+            history_file = Path("metrics_history.json")
+            if history_file.exists():
+                with open(history_file, 'r') as f:
+                    history = json.load(f)
+            else:
+                history = []
+            
+            history.append(metrics_data)
+            
+            with open(history_file, 'w') as f:
+                json.dump(history, f, indent=2)
+            
+            print(f"📚 Metrics appended to 'metrics_history.json'")
+        
         return final_report_content
+
 
 # --- Main execution block ---
 if __name__ == "__main__":
