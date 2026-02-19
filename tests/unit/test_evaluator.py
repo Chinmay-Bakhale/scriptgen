@@ -5,7 +5,7 @@ import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
-from metrics.evaluator import ReportEvaluator
+from scriptgen.metrics.evaluator import ReportEvaluator
 
 
 class TestReportEvaluator:
