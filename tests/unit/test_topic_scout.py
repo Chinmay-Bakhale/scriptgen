@@ -4,18 +4,17 @@ from unittest.mock import Mock, patch, MagicMock
 import sys
 import os
 
-# Add parent directory to path to import workflow
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 
 class TestTopicScout:
     """Test cases for TopicScout class."""
 
-    @patch('workflow.ChatGoogleGenerativeAI')
-    @patch('workflow.TavilySearch')
-    def test_topic_scout_initialization(self, mock_tavily, mock_llm, mock_env_vars):
+    @patch('scriptgen.agents.topic_scout.TavilySearch')
+    @patch('scriptgen.agents.base.ChatGoogleGenerativeAI')
+    def test_topic_scout_initialization(self, mock_llm, mock_tavily, mock_env_vars):
         """Test TopicScout initializes correctly."""
-        from workflow import TopicScout
+        from scriptgen.agents.topic_scout import TopicScout
         
         scout = TopicScout()
         
@@ -23,11 +22,11 @@ class TestTopicScout:
         assert hasattr(scout, 'llm')
         assert hasattr(scout, 'search_tool')
 
-    @patch('workflow.ChatGoogleGenerativeAI')
-    @patch('workflow.TavilySearch')
-    def test_find_trending_topic_success(self, mock_tavily, mock_llm, mock_env_vars):
+    @patch('scriptgen.agents.topic_scout.TavilySearch')
+    @patch('scriptgen.agents.base.ChatGoogleGenerativeAI')
+    def test_find_trending_topic_success(self, mock_llm, mock_tavily, mock_env_vars):
         """Test successful topic discovery."""
-        from workflow import TopicScout
+        from scriptgen.agents.topic_scout import TopicScout
         
         # Mock search results
         mock_search = Mock()
@@ -52,11 +51,11 @@ class TestTopicScout:
         assert len(topic) > 0
         assert "Error" not in topic
 
-    @patch('workflow.ChatGoogleGenerativeAI')
-    @patch('workflow.TavilySearch')
-    def test_find_trending_topic_search_failure(self, mock_tavily, mock_llm, mock_env_vars):
+    @patch('scriptgen.agents.topic_scout.TavilySearch')
+    @patch('scriptgen.agents.base.ChatGoogleGenerativeAI')
+    def test_find_trending_topic_search_failure(self, mock_llm, mock_tavily, mock_env_vars):
         """Test topic discovery handles search failures."""
-        from workflow import TopicScout
+        from scriptgen.agents.topic_scout import TopicScout
         
         # Mock search failure
         mock_search = Mock()
