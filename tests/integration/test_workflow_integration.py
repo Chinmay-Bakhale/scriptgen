@@ -11,12 +11,12 @@ class TestWorkflowIntegration:
     """Integration tests for end-to-end workflow."""
 
     @pytest.mark.integration
-    @patch('workflow.ChatGoogleGenerativeAI')
-    @patch('workflow.TavilySearch')
-    @patch('workflow.TavilyExtract')
-    def test_single_iteration_workflow(self, mock_extract, mock_search, mock_llm, mock_env_vars):
+    @patch('scriptgen.agents.researcher.TavilyExtract')
+    @patch('scriptgen.agents.researcher.TavilySearch')
+    @patch('scriptgen.agents.base.ChatGoogleGenerativeAI')
+    def test_single_iteration_workflow(self, mock_llm, mock_search, mock_extract, mock_env_vars):
         """Test a single iteration of the research workflow."""
-        from workflow import MultiAgentResearchSystem
+        from scriptgen.core.workflow import MultiAgentResearchSystem
         
         # Mock all LLM calls
         mock_llm_instance = Mock()
@@ -63,51 +63,13 @@ class TestWorkflowIntegration:
         
         system = MultiAgentResearchSystem()
         
-        # This is a smoke test - just verify it doesn't crash
+        # Smoke test - verify it doesn't crash
         assert system is not None
         assert system.app is not None
+        assert hasattr(system, 'evaluator')
 
     @pytest.mark.integration
-    @patch('workflow.input', return_value='test topic')
+    @patch('builtins.input', return_value='test topic')
     def test_manual_topic_input(self, mock_input, mock_env_vars):
         """Test manual topic input flow."""
-        # This test verifies the input flow works
         assert mock_input() == 'test topic'
-    
-    @pytest.mark.integration
-    @patch('workflow.ChatGoogleGenerativeAI')
-    @patch('workflow.TavilySearch')
-    @patch('workflow.TavilyExtract')
-    @patch('builtins.open', create=True)
-    def test_metrics_saved_after_workflow(self, mock_open, mock_extract, mock_search, mock_llm, mock_env_vars):
-        """Test that metrics are calculated and saved."""
-        from workflow import MultiAgentResearchSystem
-        
-        # Mock file operations to avoid actual file writes
-        mock_file = Mock()
-        mock_open.return_value.__enter__.return_value = mock_file
-        
-        # Setup mocks (same as test_single_iteration_workflow)
-        mock_llm_instance = Mock()
-        mock_response = Mock()
-        mock_response.content = "Plan:\nTest\n\nQueries:\n- q1"
-        mock_llm_instance.invoke.return_value = mock_response
-        mock_llm.return_value = mock_llm_instance
-        
-        mock_search_instance = Mock()
-        mock_search_instance.invoke.return_value = {
-            "results": [{"title": "Test", "url": "https://test.com", "content": "Test"}]
-        }
-        mock_search.return_value = mock_search_instance
-        
-        mock_extract_instance = Mock()
-        mock_extract_instance.invoke.return_value = {
-            "results": [{"url": "https://test.com", "raw_content": "Content"}]
-        }
-        mock_extract.return_value = mock_extract_instance
-        
-        system = MultiAgentResearchSystem()
-        
-        # Verify evaluator was initialized
-        assert hasattr(system, 'evaluator')
-        assert system.evaluator is not None

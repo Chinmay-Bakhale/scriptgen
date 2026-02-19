@@ -10,20 +10,20 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../.
 class TestImagePromptGenerator:
     """Test cases for ImagePromptGenerator class."""
 
-    @patch('image_prompt.ChatGoogleGenerativeAI')
+    @patch('scriptgen.utils.image_prompt.ChatGoogleGenerativeAI')
     def test_initialization(self, mock_llm, mock_env_vars):
         """Test ImagePromptGenerator initializes correctly."""
-        from image_prompt import ImagePromptGenerator
+        from scriptgen.utils.image_prompt import ImagePromptGenerator
         
         generator = ImagePromptGenerator()
         
         assert generator is not None
         assert hasattr(generator, 'llm')
 
-    @patch('image_prompt.ChatGoogleGenerativeAI')
+    @patch('scriptgen.utils.image_prompt.ChatGoogleGenerativeAI')
     def test_create_prompts_for_source(self, mock_llm, mock_env_vars):
         """Test prompt generation for a source."""
-        from image_prompt import ImagePromptGenerator
+        from scriptgen.utils.image_prompt import ImagePromptGenerator
         
         # Mock LLM response
         mock_llm_instance = Mock()
@@ -39,10 +39,10 @@ class TestImagePromptGenerator:
         assert isinstance(result, str)
         assert "Prompt" in result
 
-    @patch('image_prompt.ChatGoogleGenerativeAI')
+    @patch('scriptgen.utils.image_prompt.ChatGoogleGenerativeAI')
     def test_generate_and_save_prompts(self, mock_llm, mock_env_vars, tmp_path):
         """Test full prompt generation and saving workflow."""
-        from image_prompt import ImagePromptGenerator
+        from scriptgen.utils.image_prompt import ImagePromptGenerator
         
         # Mock LLM response
         mock_llm_instance = Mock()
