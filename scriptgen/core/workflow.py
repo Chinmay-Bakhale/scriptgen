@@ -14,11 +14,13 @@ from ..agents import (
     PlannerAgent,
     SearchAgent,
     ExtractorAgent,
+    FilterAgent,
     WriterAgent,
     FinalWriterAgent,
     JudgeAgent
 )
 from ..metrics.evaluator import ReportEvaluator
+from scriptgen.core import state
 
 load_dotenv()
 
@@ -32,6 +34,7 @@ class MultiAgentResearchSystem:
         self.planner = PlannerAgent()
         self.searcher = SearchAgent()
         self.extractor = ExtractorAgent()
+        self.filter = FilterAgent()
         self.writer = WriterAgent()
         self.final_writer = FinalWriterAgent()
         self.judge = JudgeAgent()
@@ -45,6 +48,10 @@ class MultiAgentResearchSystem:
         """Planner agent node."""
         return self.planner.execute(state)
     
+    def _filter_node(self, state: ResearchState) -> Dict[str, Any]:
+        """Filter agent node."""
+        return self.filter.execute(state)
+
     def _searcher_node(self, state: ResearchState) -> Dict[str, Any]:
         """Searcher agent node."""
         return self.searcher.execute(state)
@@ -79,6 +86,7 @@ class MultiAgentResearchSystem:
         workflow.add_node("planner", self._planner_node)
         workflow.add_node("searcher", self._searcher_node)
         workflow.add_node("extractor", self._extractor_node)
+        workflow.add_node("filter", self._filter_node)
         workflow.add_node("writer", self._writer_node)
         workflow.add_node("judge", self._judge_node)
         workflow.add_node("final_writer", self._final_writer_node)
@@ -87,7 +95,8 @@ class MultiAgentResearchSystem:
         workflow.add_edge(START, "planner")
         workflow.add_edge("planner", "searcher")
         workflow.add_edge("searcher", "extractor")
-        workflow.add_edge("extractor", "writer")
+        workflow.add_edge("extractor", "filter")
+        workflow.add_edge("filter", "writer")
         workflow.add_conditional_edges(
             "writer",
             self._should_continue,
@@ -184,12 +193,16 @@ class MultiAgentResearchSystem:
             print("\n📊 Evaluating report quality...")
             
             sources = final_state.get('extracted_pages', [])
+            quality_summary = final_state.get('quality_summary', {})
             metrics = self.evaluator.evaluate_report(
                 report=final_report_content,
                 topic=topic,
                 sources=sources,
                 execution_time=execution_time
             )
+
+            # Merge quality summary into metrics
+            metrics["source_quality"] = quality_summary
             
             print(self.evaluator.format_metrics_report(metrics))
             

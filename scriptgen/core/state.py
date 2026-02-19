@@ -1,5 +1,5 @@
 """State management for workflow."""
-from typing import List, TypedDict, Annotated
+from typing import List, TypedDict, Annotated, Optional
 import operator
 
 
@@ -15,3 +15,4 @@ class ResearchState(TypedDict):
     critique: str
     research_history: Annotated[List[str], operator.add]
     final_report: str
+    quality_summary: dict   # NEW: source quality scores per iteration
