@@ -212,7 +212,8 @@ class MultiAgentResearchSystem:
                 "topic": topic,
                 "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
                 "report_file": report_filename,
-                "metrics": metrics
+                "metrics": metrics,
+                "search_latency_seconds": final_state.get('search_latency_seconds', 0)
             }
             
             with open(metrics_filename, 'w', encoding='utf-8') as f:

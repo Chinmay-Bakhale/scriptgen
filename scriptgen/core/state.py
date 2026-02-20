@@ -16,3 +16,4 @@ class ResearchState(TypedDict):
     research_history: Annotated[List[str], operator.add]
     final_report: str
     quality_summary: dict   # NEW: source quality scores per iteration
+    search_latency_seconds: float
