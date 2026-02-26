@@ -7,7 +7,7 @@ from unittest.mock import Mock, MagicMock
 @pytest.fixture
 def mock_env_vars(monkeypatch):
     """Mock environment variables for testing."""
-    monkeypatch.setenv("GOOGLE_API_KEY", "test-google-key")
+    monkeypatch.setenv("SARVAM_API_KEY", "test-sarvam-key")
     monkeypatch.setenv("TAVILY_API_KEY", "test-tavily-key")
 
 
@@ -24,9 +24,11 @@ def sample_research_state():
         "draft_report": "",
         "critique": "",
         "research_history": [],
-        "final_report": ""
+        "final_report": "",
+        "quality_summary": {},
+        "search_latency_seconds": 0.0,
+        "prior_context": ""
     }
-
 
 @pytest.fixture
 def mock_llm_response():

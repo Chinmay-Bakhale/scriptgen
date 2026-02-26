@@ -3,16 +3,18 @@
 import os
 import re
 from typing import List, Dict
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_openai import ChatOpenAI
 
 class ImagePromptGenerator:
     def __init__(self):
         """Initializes the generator with a creative LLM."""
-        self.llm = ChatGoogleGenerativeAI(
-            # NOTE: Corrected to a valid and current model name for creativity
-            model="gemini-2.5-flash",
+        self.llm = ChatOpenAI(
+            model="sarvam-m",
             temperature=0.7,
-            google_api_key=os.getenv("GOOGLE_API_KEY")
+            base_url="https://api.sarvam.ai/v1",
+            api_key=os.getenv("SARVAM_API_KEY"),
+            default_headers={"api-subscription-key": os.getenv("SARVAM_API_KEY")},
+            stream_usage=False,
         )
 
     def _parse_report(self, report_content: str) -> List[Dict[str, str]]:

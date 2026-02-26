@@ -14,7 +14,7 @@ class SearchAgent(BaseAgent):
     """
 
     def __init__(self):
-        super().__init__(model="gemini-2.5-flash", temperature=0.5)
+        super().__init__(model="sarvam-m", temperature=0.7)
         self.search_tool = TavilySearch(
             max_results=2,
             topic="general",
@@ -115,7 +115,7 @@ class ExtractorAgent(BaseAgent):
     """Agent responsible for extracting full page content."""
 
     def __init__(self):
-        super().__init__(model="gemini-2.5-flash", temperature=0.5)
+        super().__init__(model="sarvam-m", temperature=0.5)
 
     def execute(self, state: Dict[str, Any]) -> Dict[str, Any]:
         """

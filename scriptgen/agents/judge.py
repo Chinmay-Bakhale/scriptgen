@@ -8,8 +8,9 @@ class JudgeAgent(BaseAgent):
     """Agent responsible for critiquing reports and suggesting improvements."""
     
     def __init__(self):
-        super().__init__(model="gemini-2.0-flash", temperature=0.7)
+         super().__init__(model="sarvam-m", temperature=0.7)
     
+
     def execute(self, state: Dict[str, Any]) -> Dict[str, Any]:
         """
         Critique the draft report and suggest improvements.

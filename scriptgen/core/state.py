@@ -9,11 +9,12 @@ class ResearchState(TypedDict):
     iteration: int
     plan: str
     search_queries: List[str]
-    raw_search_results: Annotated[List[dict], operator.add]
-    extracted_pages: Annotated[List[dict], operator.add]
+    raw_search_results: List[dict]
+    extracted_pages: List[dict]
     draft_report: str
     critique: str
     research_history: Annotated[List[str], operator.add]
     final_report: str
     quality_summary: dict   # NEW: source quality scores per iteration
     search_latency_seconds: float
+    prior_context: str

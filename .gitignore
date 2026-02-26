@@ -67,3 +67,7 @@ bandit-report.json
 
 # Logs
 *.log
+
+# Knowledge store (FAISS)
+knowledge_store/
+chroma_db/

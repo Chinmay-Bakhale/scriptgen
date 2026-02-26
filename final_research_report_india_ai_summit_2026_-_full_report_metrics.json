@@ -1,0 +1,22 @@
+{
+  "topic": "India AI Summit 2026 - full report",
+  "timestamp": "2026-02-25 17:28:52",
+  "report_file": "final_research_report_india_ai_summit_2026_-_full_report.md",
+  "metrics": {
+    "word_count": 210,
+    "sentence_count": 20,
+    "paragraph_count": 8,
+    "avg_sentence_length": 10.9,
+    "avg_word_length": 6.74,
+    "source_count": 0,
+    "unique_domains": 0,
+    "citation_count": 0,
+    "topic_mentions": 16,
+    "has_sections": false,
+    "section_count": 0,
+    "execution_time_seconds": 150.77,
+    "words_per_source": 0,
+    "source_quality": {}
+  },
+  "search_latency_seconds": 0
+}
