@@ -4,6 +4,7 @@ from .topic_scout import TopicScout
 from .planner import PlannerAgent
 from .researcher import SearchAgent, ExtractorAgent
 from .filter import FilterAgent
+from .retriever import RetrieverAgent, KnowledgeStoreAgent
 from .writer import WriterAgent, FinalWriterAgent
 from .judge import JudgeAgent
 
@@ -14,6 +15,8 @@ __all__ = [
     'SearchAgent',
     'ExtractorAgent',
     'FilterAgent',
+    'RetrieverAgent',
+    'KnowledgeStoreAgent',
     'WriterAgent',
     'FinalWriterAgent',
     'JudgeAgent',

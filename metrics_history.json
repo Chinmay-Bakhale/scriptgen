@@ -1,0 +1,134 @@
+[
+  {
+    "topic": "Epstein files",
+    "timestamp": "2026-02-25 17:09:26",
+    "report_file": "final_research_report_epstein_files.md",
+    "metrics": {
+      "word_count": 232,
+      "sentence_count": 14,
+      "paragraph_count": 9,
+      "avg_sentence_length": 16.57,
+      "avg_word_length": 6.78,
+      "source_count": 0,
+      "unique_domains": 0,
+      "citation_count": 0,
+      "topic_mentions": 10,
+      "has_sections": true,
+      "section_count": 3,
+      "execution_time_seconds": 178.38,
+      "words_per_source": 0,
+      "source_quality": {}
+    },
+    "search_latency_seconds": 0
+  },
+  {
+    "topic": "India AI Summit 2026",
+    "timestamp": "2026-02-25 17:18:33",
+    "report_file": "final_research_report_india_ai_summit_2026.md",
+    "metrics": {
+      "word_count": 282,
+      "sentence_count": 23,
+      "paragraph_count": 11,
+      "avg_sentence_length": 12.43,
+      "avg_word_length": 6.54,
+      "source_count": 0,
+      "unique_domains": 0,
+      "citation_count": 0,
+      "topic_mentions": 14,
+      "has_sections": true,
+      "section_count": 3,
+      "execution_time_seconds": 155.55,
+      "words_per_source": 0,
+      "source_quality": {}
+    },
+    "search_latency_seconds": 0
+  },
+  {
+    "topic": "India AI Summit 2026 - full report",
+    "timestamp": "2026-02-25 17:28:52",
+    "report_file": "final_research_report_india_ai_summit_2026_-_full_report.md",
+    "metrics": {
+      "word_count": 210,
+      "sentence_count": 20,
+      "paragraph_count": 8,
+      "avg_sentence_length": 10.9,
+      "avg_word_length": 6.74,
+      "source_count": 0,
+      "unique_domains": 0,
+      "citation_count": 0,
+      "topic_mentions": 16,
+      "has_sections": false,
+      "section_count": 0,
+      "execution_time_seconds": 150.77,
+      "words_per_source": 0,
+      "source_quality": {}
+    },
+    "search_latency_seconds": 0
+  },
+  {
+    "topic": "Neuroplasticity for addictions",
+    "timestamp": "2026-02-25 17:33:31",
+    "report_file": "final_research_report_neuroplasticity_for_addictions.md",
+    "metrics": {
+      "word_count": 296,
+      "sentence_count": 21,
+      "paragraph_count": 9,
+      "avg_sentence_length": 14.38,
+      "avg_word_length": 6.93,
+      "source_count": 0,
+      "unique_domains": 0,
+      "citation_count": 0,
+      "topic_mentions": 3,
+      "has_sections": true,
+      "section_count": 2,
+      "execution_time_seconds": 178.31,
+      "words_per_source": 0,
+      "source_quality": {}
+    },
+    "search_latency_seconds": 0
+  },
+  {
+    "topic": "Section 39A and what it means for goa and goans",
+    "timestamp": "2026-02-25 17:39:46",
+    "report_file": "final_research_report_section_39a_and_what_it_means_for_goa_and_goans.md",
+    "metrics": {
+      "word_count": 301,
+      "sentence_count": 24,
+      "paragraph_count": 12,
+      "avg_sentence_length": 12.83,
+      "avg_word_length": 6.49,
+      "source_count": 0,
+      "unique_domains": 0,
+      "citation_count": 0,
+      "topic_mentions": 6,
+      "has_sections": true,
+      "section_count": 3,
+      "execution_time_seconds": 229.74,
+      "words_per_source": 0,
+      "source_quality": {}
+    },
+    "search_latency_seconds": 0
+  },
+  {
+    "topic": "Section 39A in goa, what and why",
+    "timestamp": "2026-02-25 17:50:43",
+    "report_file": "final_research_report_section_39a_in_goa_what_and_why.md",
+    "metrics": {
+      "word_count": 1446,
+      "sentence_count": 68,
+      "paragraph_count": 23,
+      "avg_sentence_length": 21.43,
+      "avg_word_length": 6.08,
+      "source_count": 0,
+      "unique_domains": 0,
+      "citation_count": 0,
+      "topic_mentions": 30,
+      "has_sections": true,
+      "section_count": 1,
+      "execution_time_seconds": 237.01,
+      "words_per_source": 0,
+      "source_quality": {}
+    },
+    "search_latency_seconds": 0
+  }
+]

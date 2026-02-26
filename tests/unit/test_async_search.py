@@ -12,7 +12,7 @@ class TestSearchAgent:
     """Test cases for async SearchAgent."""
 
     @patch('scriptgen.agents.researcher.TavilySearch')
-    @patch('scriptgen.agents.base.ChatGoogleGenerativeAI')
+    @patch('scriptgen.agents.base.ChatOpenAI')
     def test_initialization(self, mock_llm, mock_tavily, mock_env_vars):
         """Test SearchAgent initializes correctly."""
         from scriptgen.agents.researcher import SearchAgent
@@ -21,7 +21,7 @@ class TestSearchAgent:
         assert hasattr(agent, 'search_tool')
 
     @patch('scriptgen.agents.researcher.TavilySearch')
-    @patch('scriptgen.agents.base.ChatGoogleGenerativeAI')
+    @patch('scriptgen.agents.base.ChatOpenAI')
     def test_execute_returns_results(self, mock_llm, mock_tavily, mock_env_vars):
         """Test execute returns search results."""
         from scriptgen.agents.researcher import SearchAgent
@@ -48,7 +48,7 @@ class TestSearchAgent:
         assert isinstance(result["search_latency_seconds"], float)
 
     @patch('scriptgen.agents.researcher.TavilySearch')
-    @patch('scriptgen.agents.base.ChatGoogleGenerativeAI')
+    @patch('scriptgen.agents.base.ChatOpenAI')
     def test_execute_empty_queries(self, mock_llm, mock_tavily, mock_env_vars):
         """Test execute handles empty query list."""
         from scriptgen.agents.researcher import SearchAgent
@@ -61,7 +61,7 @@ class TestSearchAgent:
         assert result["search_latency_seconds"] == 0.0
 
     @patch('scriptgen.agents.researcher.TavilySearch')
-    @patch('scriptgen.agents.base.ChatGoogleGenerativeAI')
+    @patch('scriptgen.agents.base.ChatOpenAI')
     def test_execute_filters_empty_strings(self, mock_llm, mock_tavily, mock_env_vars):
         """Test execute filters out empty/whitespace queries."""
         from scriptgen.agents.researcher import SearchAgent
@@ -78,7 +78,7 @@ class TestSearchAgent:
         assert mock_search.invoke.call_count == 1
 
     @patch('scriptgen.agents.researcher.TavilySearch')
-    @patch('scriptgen.agents.base.ChatGoogleGenerativeAI')
+    @patch('scriptgen.agents.base.ChatOpenAI')
     def test_execute_handles_search_failure(self, mock_llm, mock_tavily, mock_env_vars):
         """Test execute handles individual query failures gracefully."""
         from scriptgen.agents.researcher import SearchAgent
@@ -96,7 +96,7 @@ class TestSearchAgent:
         assert isinstance(result["raw_search_results"], list)
 
     @patch('scriptgen.agents.researcher.TavilySearch')
-    @patch('scriptgen.agents.base.ChatGoogleGenerativeAI')
+    @patch('scriptgen.agents.base.ChatOpenAI')
     def test_concurrent_execution_faster_than_sequential(self, mock_llm, mock_tavily, mock_env_vars):
         """Test that concurrent execution completes queries together."""
         import time
@@ -131,7 +131,7 @@ class TestSearchAgent:
 
     @pytest.mark.asyncio
     @patch('scriptgen.agents.researcher.TavilySearch')
-    @patch('scriptgen.agents.base.ChatGoogleGenerativeAI')
+    @patch('scriptgen.agents.base.ChatOpenAI')
     async def test_search_all_collects_all_results(self, mock_llm, mock_tavily, mock_env_vars):
         """Test _search_all collects results from all queries."""
         from scriptgen.agents.researcher import SearchAgent

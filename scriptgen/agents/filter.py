@@ -17,7 +17,7 @@ class FilterAgent(BaseAgent):
         Args:
             min_score: Minimum quality threshold (0.0 - 1.0)
         """
-        super().__init__(model="gemini-2.5-flash", temperature=0.5)
+        super().__init__(model="sarvam-m", temperature=0.7)
         self.scorer = SourceQualityScorer(min_score=min_score)
 
     def execute(self, state: Dict[str, Any]) -> Dict[str, Any]:

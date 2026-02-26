@@ -6,11 +6,12 @@ from .base import BaseAgent
 
 class TopicScout(BaseAgent):
     """Agent to find trending and viral topics."""
-    
+
     def __init__(self):
-        super().__init__(model="gemini-2.5-flash-lite-preview-06-17", temperature=0.7)
+        super().__init__(model="sarvam-m", temperature=0.7)
         self.search_tool = TavilySearch(max_results=2)
-    
+
+
     def execute(self, state: dict) -> dict:
         """Not used in current workflow, kept for compatibility."""
         return state

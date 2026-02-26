@@ -1,8 +1,13 @@
 # Core dependencies
 langgraph>=0.2.0
 langchain-google-genai>=2.0.0
+langchain-openai>=0.2.0
 langchain-tavily>=0.2.0
 python-dotenv>=1.0.0
+# Vector store (FAISS — no pydantic dependency, Python 3.14 compatible)
+faiss-cpu>=1.8.0
+sentence-transformers>=3.0.0
+
 
 # Testing dependencies
 pytest>=8.0.0

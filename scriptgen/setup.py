@@ -9,7 +9,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         "langgraph>=0.2.0",
-        "langchain-google-genai>=2.0.0",
+        "langchain-openai>=0.2.0",
         "langchain-tavily>=0.2.0",
         "python-dotenv>=1.0.0",
         "matplotlib>=3.8.0",

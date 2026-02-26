@@ -15,11 +15,14 @@ from ..agents import (
     SearchAgent,
     ExtractorAgent,
     FilterAgent,
+    RetrieverAgent,
+    KnowledgeStoreAgent,
     WriterAgent,
     FinalWriterAgent,
     JudgeAgent
 )
 from ..metrics.evaluator import ReportEvaluator
+from ..utils.knowledge_base import KnowledgeBase
 from scriptgen.core import state
 
 load_dotenv()
@@ -31,10 +34,13 @@ class MultiAgentResearchSystem:
     def __init__(self):
         """Initialize the research system with all agents."""
         # Initialize agents
+        self.knowledge_base = KnowledgeBase()
         self.planner = PlannerAgent()
         self.searcher = SearchAgent()
         self.extractor = ExtractorAgent()
         self.filter = FilterAgent()
+        self.retriever = RetrieverAgent(self.knowledge_base)
+        self.knowledge_store = KnowledgeStoreAgent(self.knowledge_base)
         self.writer = WriterAgent()
         self.final_writer = FinalWriterAgent()
         self.judge = JudgeAgent()
@@ -51,6 +57,14 @@ class MultiAgentResearchSystem:
     def _filter_node(self, state: ResearchState) -> Dict[str, Any]:
         """Filter agent node."""
         return self.filter.execute(state)
+    
+    def _retriever_node(self, state: ResearchState) -> Dict[str, Any]:
+        """RAG retrieval node."""
+        return self.retriever.execute(state)
+
+    def _knowledge_store_node(self, state: ResearchState) -> Dict[str, Any]:
+        """Knowledge store node."""
+        return self.knowledge_store.execute(state)
 
     def _searcher_node(self, state: ResearchState) -> Dict[str, Any]:
         """Searcher agent node."""
@@ -83,19 +97,23 @@ class MultiAgentResearchSystem:
         workflow = StateGraph(ResearchState)
         
         # Add nodes
+        workflow.add_node("retriever", self._retriever_node)
         workflow.add_node("planner", self._planner_node)
         workflow.add_node("searcher", self._searcher_node)
         workflow.add_node("extractor", self._extractor_node)
+        workflow.add_node("knowledge_store", self._knowledge_store_node)
         workflow.add_node("filter", self._filter_node)
         workflow.add_node("writer", self._writer_node)
         workflow.add_node("judge", self._judge_node)
         workflow.add_node("final_writer", self._final_writer_node)
         
         # Add edges
-        workflow.add_edge(START, "planner")
+        workflow.add_edge(START, "retriever")
+        workflow.add_edge("retriever", "planner")
         workflow.add_edge("planner", "searcher")
         workflow.add_edge("searcher", "extractor")
-        workflow.add_edge("extractor", "filter")
+        workflow.add_edge("extractor", "knowledge_store")
+        workflow.add_edge("knowledge_store", "filter")
         workflow.add_edge("filter", "writer")
         workflow.add_conditional_edges(
             "writer",
@@ -105,7 +123,7 @@ class MultiAgentResearchSystem:
                 "end_workflow": "final_writer"
             }
         )
-        workflow.add_edge("judge", "planner")
+        workflow.add_edge("judge", "retriever")  # Loop back for next iteration
         workflow.add_edge("final_writer", END)
         
         return workflow
@@ -156,7 +174,8 @@ class MultiAgentResearchSystem:
             "draft_report": "",
             "critique": "",
             "research_history": [],
-            "final_report": ""
+            "final_report": "",
+            "prior_context": "",
         }
         
         final_state = None
