@@ -26,12 +26,17 @@ class PlannerAgent(BaseAgent):
                 "Do NOT repeat previous searches. Focus on addressing critique and filling gaps."
             )
 
+        if prior_context:
+            prior_context_block = f"Prior Knowledge (already researched — do NOT re-search this):\n{prior_context}"
+        else:
+            prior_context_block = ""
+
         prompt = f"""
         You are a master research planner. Devise a detailed research strategy.
 
         Topic: "{state['topic']}"
 
-        {f"Prior Knowledge (already researched — do NOT re-search this):\n{prior_context}" if prior_context else ""}
+        {prior_context_block}
 
         Research History:
         {state['research_history']}
@@ -58,9 +63,10 @@ class PlannerAgent(BaseAgent):
         queries_match = re.search(r"Queries:\s*(.*)", response.content, re.DOTALL)
 
         plan = plan_match.group(1).strip() if plan_match else "No plan generated."
+        newline = "\n"
         queries = [
             q.strip().replace('-', '').strip()
-            for q in queries_match.group(1).strip().split('\n')
+            for q in queries_match.group(1).strip().split(newline)
         ] if queries_match else []
 
         self.log(f"Generated plan with {len(queries)} queries")
