@@ -10,7 +10,7 @@ class ResearchState(TypedDict):
     plan: str
     search_queries: List[str]
     raw_search_results: List[dict]
-    extracted_pages: List[dict]
+    Annotated[List[dict], operator.add]
     draft_report: str
     critique: str
     research_history: Annotated[List[str], operator.add]
