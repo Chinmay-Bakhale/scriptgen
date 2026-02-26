@@ -8,6 +8,7 @@ from unittest.mock import Mock, MagicMock
 def mock_env_vars(monkeypatch):
     """Mock environment variables for testing."""
     monkeypatch.setenv("SARVAM_API_KEY", "test-sarvam-key")
+    monkeypatch.setenv("SARVAM_API_KEY", "test-sarvam-key")
     monkeypatch.setenv("TAVILY_API_KEY", "test-tavily-key")
 
 
