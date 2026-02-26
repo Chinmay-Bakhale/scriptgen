@@ -58,6 +58,7 @@ coverage.xml
 
 # Generated files
 *.md
+*.json
 !README.md
 *.txt
 !requirements.txt
