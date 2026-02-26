@@ -179,25 +179,29 @@ class MultiAgentResearchSystem:
         }
         
         final_state = None
+        full_state = dict(initial_state)
         for output in self.app.stream(initial_state):
             for node_name, state_after_node in output.items():
                 print(f"\n--- Output from: {node_name} ---")
-                final_state = state_after_node
-                
+                if state_after_node:                              # ← add this guard
+                    full_state.update(state_after_node)
+
                 if node_name == "planner":
-                    print(f"Plan: {state_after_node['plan']}")
-                    print(f"Queries: {state_after_node['search_queries']}")
+                    print(f"Plan: {full_state['plan']}")
+                    print(f"Queries: {full_state['search_queries']}")
                 elif node_name == "writer":
                     print("Draft Report Generated (showing first 200 chars):")
-                    print(state_after_node['draft_report'][:200])
+                    print(full_state['draft_report'][:200])
                 elif node_name == "judge":
                     print("\n**Critique and Suggestions from the Judge:**")
-                    print(state_after_node['critique'])
+                    print(full_state['critique'])
+
         
         execution_time = time.time() - start_time
         
         # Step 3: Save report
-        final_report_content = final_state.get('final_report', "No report was generated.")
+        final_report_content = full_state.get('final_report', "No report was generated.")
+        sources = full_state.get('extracted_pages', [])
         report_filename = "final_research_report_" + re.sub(
             r'[^\w\s-]', '', topic.lower()
         ).replace(' ', '_')[:50] + ".md"
@@ -211,8 +215,8 @@ class MultiAgentResearchSystem:
         if final_report_content and "No report was generated." not in final_report_content:
             print("\n📊 Evaluating report quality...")
             
-            sources = final_state.get('extracted_pages', [])
-            quality_summary = final_state.get('quality_summary', {})
+            sources = full_state.get('extracted_pages', [])
+            quality_summary = full_state.get('quality_summary', {})
             metrics = self.evaluator.evaluate_report(
                 report=final_report_content,
                 topic=topic,
@@ -232,7 +236,7 @@ class MultiAgentResearchSystem:
                 "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
                 "report_file": report_filename,
                 "metrics": metrics,
-                "search_latency_seconds": final_state.get('search_latency_seconds', 0)
+                "search_latency_seconds": full_state.get('search_latency_seconds', 0)
             }
             
             with open(metrics_filename, 'w', encoding='utf-8') as f:

@@ -130,5 +130,57 @@
       "source_quality": {}
     },
     "search_latency_seconds": 0
+  },
+  {
+    "topic": "Op Sindoor - Ind vs Pak",
+    "timestamp": "2026-02-26 17:19:14",
+    "report_file": "final_research_report_op_sindoor_-_ind_vs_pak.md",
+    "metrics": {
+      "word_count": 1521,
+      "sentence_count": 63,
+      "paragraph_count": 29,
+      "avg_sentence_length": 24.27,
+      "avg_word_length": 6.29,
+      "source_count": 0,
+      "unique_domains": 0,
+      "citation_count": 0,
+      "topic_mentions": 20,
+      "has_sections": true,
+      "section_count": 1,
+      "execution_time_seconds": 247.03,
+      "words_per_source": 0,
+      "source_quality": {}
+    },
+    "search_latency_seconds": 0
+  },
+  {
+    "topic": "french president visit india 2026",
+    "timestamp": "2026-02-26 17:54:21",
+    "report_file": "final_research_report_french_president_visit_india_2026.md",
+    "metrics": {
+      "word_count": 191,
+      "sentence_count": 6,
+      "paragraph_count": 6,
+      "avg_sentence_length": 32.0,
+      "avg_word_length": 6.59,
+      "source_count": 27,
+      "unique_domains": 9,
+      "citation_count": 0,
+      "topic_mentions": 17,
+      "has_sections": true,
+      "section_count": 1,
+      "execution_time_seconds": 208.58,
+      "words_per_source": 7.07,
+      "source_quality": {
+        "total_sources": 27,
+        "avg_score": 0.7996,
+        "max_score": 0.88,
+        "min_score": 0.59,
+        "high_quality_count": 24,
+        "medium_quality_count": 3,
+        "low_quality_count": 0
+      }
+    },
+    "search_latency_seconds": 3.47
   }
 ]
