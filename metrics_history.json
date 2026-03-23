@@ -182,5 +182,155 @@
       }
     },
     "search_latency_seconds": 3.47
+  },
+  {
+    "topic": "alternative to LLMs in the future of AI",
+    "timestamp": "2026-03-22 08:38:57",
+    "report_file": "final_research_report_alternative_to_llms_in_the_future_of_ai.md",
+    "metrics": {
+      "word_count": 1822,
+      "sentence_count": 80,
+      "paragraph_count": 28,
+      "avg_sentence_length": 22.81,
+      "avg_word_length": 6.52,
+      "source_count": 25,
+      "unique_domains": 8,
+      "citation_count": 0,
+      "topic_mentions": 34,
+      "has_sections": true,
+      "section_count": 1,
+      "execution_time_seconds": 289.4,
+      "words_per_source": 72.88,
+      "source_quality": {
+        "total_sources": 26,
+        "avg_score": 0.5334,
+        "max_score": 0.6187,
+        "min_score": 0.27,
+        "high_quality_count": 0,
+        "medium_quality_count": 25,
+        "low_quality_count": 1
+      }
+    },
+    "search_latency_seconds": 3.72
+  },
+  {
+    "topic": "everything about the current US & Israel vs  Iran conflict",
+    "timestamp": "2026-03-22 10:40:03",
+    "report_file": "final_research_report_everything_about_the_current_us__israel_vs__iran_c.md",
+    "metrics": {
+      "word_count": 1592,
+      "sentence_count": 73,
+      "paragraph_count": 27,
+      "avg_sentence_length": 21.92,
+      "avg_word_length": 6.0,
+      "source_count": 26,
+      "unique_domains": 9,
+      "citation_count": 0,
+      "topic_mentions": 50,
+      "has_sections": false,
+      "section_count": 0,
+      "execution_time_seconds": 244.28,
+      "words_per_source": 61.23,
+      "source_quality": {
+        "total_sources": 26,
+        "avg_score": 0.7379,
+        "max_score": 0.85,
+        "min_score": 0.5188,
+        "high_quality_count": 18,
+        "medium_quality_count": 8,
+        "low_quality_count": 0
+      }
+    },
+    "search_latency_seconds": 3.45
+  },
+  {
+    "topic": "News from India for March 2026",
+    "timestamp": "2026-03-22 10:55:30",
+    "report_file": "final_research_report_news_from_india_for_march_2026.md",
+    "metrics": {
+      "word_count": 1694,
+      "sentence_count": 78,
+      "paragraph_count": 29,
+      "avg_sentence_length": 21.88,
+      "avg_word_length": 6.18,
+      "source_count": 19,
+      "unique_domains": 7,
+      "citation_count": 0,
+      "topic_mentions": 43,
+      "has_sections": false,
+      "section_count": 0,
+      "execution_time_seconds": 266.27,
+      "words_per_source": 89.16,
+      "source_quality": {
+        "total_sources": 19,
+        "avg_score": 0.7896,
+        "max_score": 0.9133,
+        "min_score": 0.59,
+        "high_quality_count": 15,
+        "medium_quality_count": 4,
+        "low_quality_count": 0
+      }
+    },
+    "search_latency_seconds": 2.01
+  },
+  {
+    "topic": "Startups in India in 2026",
+    "timestamp": "2026-03-23 11:45:00",
+    "report_file": "final_research_report_startups_in_india_in_2026.md",
+    "metrics": {
+      "word_count": 1445,
+      "sentence_count": 79,
+      "paragraph_count": 31,
+      "avg_sentence_length": 18.47,
+      "avg_word_length": 6.35,
+      "source_count": 25,
+      "unique_domains": 10,
+      "citation_count": 0,
+      "topic_mentions": 39,
+      "has_sections": true,
+      "section_count": 1,
+      "execution_time_seconds": 272.61,
+      "words_per_source": 57.8,
+      "source_quality": {
+        "total_sources": 26,
+        "avg_score": 0.7931,
+        "max_score": 0.88,
+        "min_score": 0.27,
+        "high_quality_count": 21,
+        "medium_quality_count": 4,
+        "low_quality_count": 1
+      }
+    },
+    "search_latency_seconds": 3.12
+  },
+  {
+    "topic": "Reality potrayed in the movie Dhurandhar(2025)",
+    "timestamp": "2026-03-23 12:01:57",
+    "report_file": "final_research_report_reality_potrayed_in_the_movie_dhurandhar2025.md",
+    "metrics": {
+      "word_count": 1185,
+      "sentence_count": 50,
+      "paragraph_count": 23,
+      "avg_sentence_length": 23.78,
+      "avg_word_length": 6.05,
+      "source_count": 24,
+      "unique_domains": 9,
+      "citation_count": 0,
+      "topic_mentions": 13,
+      "has_sections": true,
+      "section_count": 1,
+      "execution_time_seconds": 259.53,
+      "words_per_source": 49.38,
+      "source_quality": {
+        "total_sources": 24,
+        "avg_score": 0.3971,
+        "max_score": 0.6206,
+        "min_score": 0.33,
+        "high_quality_count": 0,
+        "medium_quality_count": 4,
+        "low_quality_count": 20
+      }
+    },
+    "search_latency_seconds": 4.21
   }
 ]

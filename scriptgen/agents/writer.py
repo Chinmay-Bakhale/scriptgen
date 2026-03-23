@@ -38,7 +38,7 @@ class WriterAgent(BaseAgent):
             raise ValueError("GOOGLE_API_KEY is not set")
 
         self.llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-flash",
+            model="gemini-flash-latest",
             temperature=0.5,
             google_api_key=api_key,
             max_output_tokens=4096,
@@ -155,7 +155,7 @@ class FinalWriterAgent(BaseAgent):
         Full Context:
         {full_context}
         
-        Generate a final report in 8000 words based on this context, well structured as a discussion
+        Generate a final report based on this context, well structured as a discussion
         covering different viewpoints mentioned in it.
         """
         

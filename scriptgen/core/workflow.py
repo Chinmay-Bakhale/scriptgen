@@ -1,6 +1,7 @@
 """Main workflow orchestrator using modular agents."""
 import re
 import time
+import os
 import json
 from pathlib import Path
 from typing import Dict, Any
@@ -200,16 +201,21 @@ class MultiAgentResearchSystem:
         execution_time = time.time() - start_time
         
         # Step 3: Save report
+        output_dir = r"C:\Users\17cb1\OneDrive\Desktop\Projects\scriptgen\output"
+        os.makedirs(output_dir, exist_ok=True)
+        
         final_report_content = full_state.get('final_report', "No report was generated.")
         sources = full_state.get('extracted_pages', [])
         report_filename = "final_research_report_" + re.sub(
             r'[^\w\s-]', '', topic.lower()
         ).replace(' ', '_')[:50] + ".md"
         
-        with open(report_filename, 'w', encoding='utf-8') as f:
+        file_path = os.path.join(output_dir, report_filename)
+        
+        with open(file_path, 'w', encoding='utf-8') as f:
             f.write(final_report_content)
         
-        print(f"\n✅ Workflow complete! Final report saved to '{report_filename}'")
+        print(f"\n✅ Workflow complete! Final report saved to '{file_path}'")
         
         # Step 4: Evaluate and save metrics
         if final_report_content and "No report was generated." not in final_report_content:
@@ -231,6 +237,7 @@ class MultiAgentResearchSystem:
             
             # Save metrics
             metrics_filename = report_filename.replace('.md', '_metrics.json')
+            metrics_filepath = os.path.join(output_dir, metrics_filename)
             metrics_data = {
                 "topic": topic,
                 "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -239,10 +246,10 @@ class MultiAgentResearchSystem:
                 "search_latency_seconds": full_state.get('search_latency_seconds', 0)
             }
             
-            with open(metrics_filename, 'w', encoding='utf-8') as f:
+            with open(metrics_filepath, 'w', encoding='utf-8') as f:
                 json.dump(metrics_data, f, indent=2)
             
-            print(f"📈 Metrics saved to '{metrics_filename}'")
+            print(f"📈 Metrics saved to '{metrics_filepath}'")
             
             # Append to history
             history_file = Path("metrics_history.json")
@@ -257,6 +264,6 @@ class MultiAgentResearchSystem:
             with open(history_file, 'w') as f:
                 json.dump(history, f, indent=2)
             
-            print(f"📚 Metrics appended to 'metrics_history.json'")
+            print(f"📚 Metrics appended to '{history_file}'")
         
         return final_report_content

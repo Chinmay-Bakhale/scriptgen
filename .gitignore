@@ -72,3 +72,6 @@ bandit-report.json
 # Knowledge store (FAISS)
 knowledge_store/
 chroma_db/
+
+#output
+output/
